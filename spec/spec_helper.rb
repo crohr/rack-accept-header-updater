@@ -1,6 +1,7 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-require 'rack-accept-header-updater'
+require 'rack'
+require 'rack/accept_header_updater'
 require 'spec'
 require 'spec/autorun'
 

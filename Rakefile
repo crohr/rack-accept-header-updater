@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "rack-accept-header-updater"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{A Rack middleware for automatically removing file extensions from URIs, and update the Accept HTTP Header accordingly.}
+    gem.description = %Q{A Rack middleware for automatically removing file extensions from URIs, and update the Accept HTTP Header accordingly.}
     gem.email = "cyril.rohr@gmail.com"
     gem.homepage = "http://github.com/crohr/rack-accept-header-updater"
     gem.authors = ["Cyril Rohr"]
