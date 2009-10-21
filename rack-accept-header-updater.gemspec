@@ -23,6 +23,9 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "lib/rack/accept_header_updater.rb",
+     "rack-accept-header-updater.gemspec",
+     "spec/rack_accept_header_updater_spec.rb",
      "spec/spec_helper.rb"
   ]
   s.homepage = %q{http://github.com/crohr/rack-accept-header-updater}
