@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rack-accept-header-updater}
-  s.version = "1.0.1"
+  s.version = "1.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Cyril Rohr"]
-  s.date = %q{2009-10-21}
+  s.date = %q{2009-10-22}
   s.description = %q{A Rack middleware for automatically removing file extensions from URIs, and update the Accept HTTP Header accordingly.}
   s.email = %q{cyril.rohr@gmail.com}
   s.extra_rdoc_files = [
