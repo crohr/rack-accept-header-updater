@@ -16,12 +16,6 @@ describe Rack::AcceptHeaderUpdater do
     status, headers, body = Rack::AcceptHeaderUpdater.new(app).call(request)
     body.should == ["application/json,*/*|/some/resource"]
   end
-  it "should remove the file extension even if there are no mime types associated" do
-    app = lambda { |env| [200, {'Content-Type' => 'text/plain'}, [[env['HTTP_ACCEPT'], env['PATH_INFO']].join("|")]] }
-    request = Rack::MockRequest.env_for("/some/resource.json", :input => "foo=bar", 'HTTP_ACCEPT' => '*/*')
-    status, headers, body = Rack::AcceptHeaderUpdater.new(app).call(request)
-    body.should == ["*/*|/some/resource"]
-  end
   it "should be case insensitive for extensions" do
     mime :json, 'application/json'
     app = lambda { |env| [200, {'Content-Type' => 'text/plain'}, [[env['HTTP_ACCEPT'], env['PATH_INFO']].join("|")]] }
@@ -41,6 +35,12 @@ describe Rack::AcceptHeaderUpdater do
     request = Rack::MockRequest.env_for("/some/resource.collection_json_v1", :input => "foo=bar", 'HTTP_ACCEPT' => '*/*')
     status, headers, body = Rack::AcceptHeaderUpdater.new(app).call(request)
     body.should == ["application/vnd.com.example.Collection+json;level=1,*/*|/some/resource"]
+  end
+  it "should not remove the extension if it is not registered in the rack mime types" do
+    app = lambda { |env| [200, {'Content-Type' => 'text/plain'}, [[env['HTTP_ACCEPT'], env['PATH_INFO']].join("|")]] }
+    request = Rack::MockRequest.env_for("/some/resource.x.y", :input => "foo=bar", 'HTTP_ACCEPT' => '*/*')
+    status, headers, body = Rack::AcceptHeaderUpdater.new(app).call(request)
+    body.should == ["*/*|/some/resource.x.y"]
   end
 end
 

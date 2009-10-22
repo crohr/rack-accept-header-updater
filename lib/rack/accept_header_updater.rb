@@ -34,8 +34,8 @@ module Rack
       unless (ext = ::File.extname(req.path_info)).empty?
         if (mime_type = Rack::Mime::MIME_TYPES[ext.downcase])
           env['HTTP_ACCEPT'] = [mime_type, env['HTTP_ACCEPT']].join(",")
+          req.path_info.gsub!(/#{ext}$/, '')
         end
-        req.path_info.gsub!(/#{ext}$/, '')
       end
       @app.call(env)
     end    
