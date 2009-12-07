@@ -42,5 +42,12 @@ describe Rack::AcceptHeaderUpdater do
     status, headers, body = Rack::AcceptHeaderUpdater.new(app).call(request)
     body.should == ["*/*|/some/resource.x.y"]
   end
+  it "should do nothing if the :except option contains a regexp that matches the request's path" do
+    mime :json, 'application/json'
+    app = lambda { |env| [200, {'Content-Type' => 'text/plain'}, [[env['HTTP_ACCEPT'], env['PATH_INFO']].join("|")]] }
+    request = Rack::MockRequest.env_for("/some/resource.json", :input => "foo=bar", 'HTTP_ACCEPT' => '*/*')
+    status, headers, body = Rack::AcceptHeaderUpdater.new(app, :except => [/\.json$/]).call(request)
+    body.should == ["*/*|/some/resource.json"]
+  end
 end
 

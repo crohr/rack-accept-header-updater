@@ -27,12 +27,14 @@ module Rack
 
     def initialize(app, options = {})
       @app = app
+      @options = options
     end
   
     def call(env)
       req = Rack::Request.new(env)
       unless (ext = ::File.extname(req.path_info)).empty?
-        if (mime_type = Rack::Mime::MIME_TYPES[ext.downcase])
+        ignore_middleware = (@options[:except] || []).detect{ |except| env['PATH_INFO'] =~ except }
+        if !ignore_middleware && (mime_type = Rack::Mime::MIME_TYPES[ext.downcase])
           env['HTTP_ACCEPT'] = [mime_type, env['HTTP_ACCEPT']].join(",")
           req.path_info.gsub!(/#{ext}$/, '')
         end
